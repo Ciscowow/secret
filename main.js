@@ -1,6 +1,5 @@
-// ✅ Supabase client (put your anon key here)
 const supabaseUrl = "https://nlxaraczwqlndfcyvbfs.supabase.co";
-const supabaseAnonKey = "PASTE_YOUR_ANON_PUBLIC_KEY_HERE";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5seGFyYWN6d3FsbmRmY3l2YmZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4OTMwMDgsImV4cCI6MjA4NjQ2OTAwOH0.8UjuuTpz3ikHGJpVC2ATdk7h7N1Ps884W0dDHuIY4kg";
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
 const yesBtn = document.querySelector('.btn-yes');
@@ -88,3 +87,4 @@ noBtn.addEventListener('click', async () => {
     console.log("Supabase fetch error:", e);
   }
 });
+
