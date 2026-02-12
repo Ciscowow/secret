@@ -21,7 +21,7 @@ const noMessages = [
   { h1: 'Sure na sure kana? ', h2: 'Loh 🥺' },
   { h1: 'Wag na mainis ', h2: 'Sige na plss 😢' },
   { h1: 'Hahayaan mo lang ako mag isa ', h2: 'Last chance 😭' },
-  { h1: 'Bruh 🙄', h2: 'Bawal mag no 🤪' },
+  { h1: 'Bawal mag no 🤪', h2: 'Bruh 🙄' },
 ];
 
 let noClickIndex = 0;
@@ -88,5 +88,6 @@ noBtn.addEventListener('click', async () => {
     console.log("Supabase fetch error:", e);
   }
 });
+
 
 
