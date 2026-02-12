@@ -79,7 +79,28 @@ noBtn.addEventListener('click', async () => {
   capyRight.src = 'img/4-sad.gif';
 
   noClicked = true;
-  noClickIndex = (noClickIndex + 1) % noMessages.length;
+
+  const lastIndex = noMessages.length - 1;
+
+  if (noClickIndex < lastIndex) {
+    noClickIndex += 1;
+  } else {
+    if (!yesBtn.dataset.scale) yesBtn.dataset.scale = "1";
+    let scale = parseFloat(yesBtn.dataset.scale);
+
+    scale *= 1.35; 
+    yesBtn.dataset.scale = String(scale);
+
+    yesBtn.style.transformOrigin = "center";
+    yesBtn.style.transition = "transform 200ms ease";
+
+    yesBtn.style.position = "fixed";
+    yesBtn.style.left = "50%";
+    yesBtn.style.top = "50%";
+    yesBtn.style.zIndex = "999999";
+    yesBtn.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+  }
 
   try {
     const { error } = await supabaseClient.rpc('increment_no');
@@ -88,6 +109,7 @@ noBtn.addEventListener('click', async () => {
     console.log("Supabase fetch error:", e);
   }
 });
+
 
 
 
