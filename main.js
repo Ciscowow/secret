@@ -1,3 +1,8 @@
+// ✅ Supabase client (put your anon key here)
+const supabaseUrl = "https://nlxaraczwqlndfcyvbfs.supabase.co";
+const supabaseAnonKey = "PASTE_YOUR_ANON_PUBLIC_KEY_HERE";
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
 const yesBtn = document.querySelector('.btn-yes');
 const noBtn = document.querySelector('.btn-no');
 
@@ -14,18 +19,9 @@ const leftOriginal = capyLeft.src;
 const rightOriginal = capyRight.src;
 
 const noMessages = [
-  {
-    h1: 'Sure na sure kana? ',
-    h2: 'Loh 🥺'
-  },
-  {
-    h1: 'Wag na mainis ',
-    h2: 'Sige na plss 😢'
-  },
-  {
-    h1: 'Hahayaan mo lang ako mag isa ',
-    h2: 'Last chance 😭'
-  },
+  { h1: 'Sure na sure kana? ', h2: 'Loh 🥺' },
+  { h1: 'Wag na mainis ', h2: 'Sige na plss 😢' },
+  { h1: 'Hahayaan mo lang ako mag isa ', h2: 'Last chance 😭' },
 ];
 
 let noClickIndex = 0;
@@ -42,6 +38,9 @@ yesBtn.addEventListener('mouseenter', () => {
   capyLeft.src = leftOriginal;
   capyRight.src = rightOriginal;
 
+  capyLeft.classList.remove('sad-size');
+  capyRight.classList.remove('sad-size');
+
   noClicked = false;
   noClickIndex = 0;
 });
@@ -57,6 +56,19 @@ noBtn.addEventListener('mouseenter', () => {
   capyRight.classList.add('sad-size');
 });
 
+noBtn.addEventListener('mouseleave', () => {
+  if (noClicked) return;
+
+  title.textContent = originalTitle;
+  subtitle.textContent = originalSubtitle;
+
+  capyLeft.src = leftOriginal;
+  capyRight.src = rightOriginal;
+
+  capyLeft.classList.remove('sad-size');
+  capyRight.classList.remove('sad-size');
+});
+
 noBtn.addEventListener('click', async () => {
   const message = noMessages[noClickIndex];
 
@@ -70,13 +82,9 @@ noBtn.addEventListener('click', async () => {
   noClickIndex = (noClickIndex + 1) % noMessages.length;
 
   try {
-    await fetch('https://nlxaraczwqlndfcyvbfs.supabase.co/functions/v1/click', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug: 'valentine_no' })
-    });
+    const { error } = await supabaseClient.rpc('increment_no');
+    if (error) console.log("Supabase RPC error:", error);
   } catch (e) {
-    console.log('No click not counted (offline maybe)');
+    console.log("Supabase fetch error:", e);
   }
 });
-
