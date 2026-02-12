@@ -57,21 +57,7 @@ noBtn.addEventListener('mouseenter', () => {
   capyRight.classList.add('sad-size');
 });
 
-noBtn.addEventListener('mouseleave', () => {
-  if (noClicked) return;
-
-  title.textContent = originalTitle;
-  subtitle.textContent = originalSubtitle;
-
-  capyLeft.src = leftOriginal;
-  capyRight.src = rightOriginal;
-
-  capyLeft.classList.remove('sad-size');
-  capyRight.classList.remove('sad-size');
-});
-
-
-noBtn.addEventListener('click', () => {
+noBtn.addEventListener('click', async () => {
   const message = noMessages[noClickIndex];
 
   title.textContent = message.h1;
@@ -82,4 +68,15 @@ noBtn.addEventListener('click', () => {
 
   noClicked = true;
   noClickIndex = (noClickIndex + 1) % noMessages.length;
+
+  try {
+    await fetch('https://nlxaraczwqlndfcyvbfs.supabase.co/functions/v1/click', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: 'valentine_no' })
+    });
+  } catch (e) {
+    console.log('No click not counted (offline maybe)');
+  }
 });
+
